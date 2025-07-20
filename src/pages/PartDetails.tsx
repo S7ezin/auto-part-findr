@@ -5,11 +5,15 @@ import { Badge } from '@/components/ui/badge';
 import { spareParts } from '@/data/partsData';
 import { ArrowLeft, ShoppingCart, Heart, Star, Shield, Truck, RotateCcw } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
-import { toast } from '@/hooks/use-toast';
+import { useCart } from '@/context/CartContext';
+import { useToast } from '@/hooks/use-toast';
+import CurrencyDisplay from '@/components/CurrencyDisplay';
 
 const PartDetails = () => {
   const { id } = useParams<{ id: string }>();
   const { user } = useAuth();
+  const { addToCart } = useCart();
+  const { toast } = useToast();
   
   const part = spareParts.find(p => p.id === id);
 
@@ -33,10 +37,13 @@ const PartDetails = () => {
   }
 
   const handleAddToCart = () => {
-    toast({
-      title: "Added to Cart",
-      description: `${part.name} has been added to your cart.`,
-    });
+    if (part) {
+      addToCart(part);
+      toast({
+        title: "Added to Cart",
+        description: `${part.name} has been added to your cart.`,
+      });
+    }
   };
 
   const handleAddToWishlist = () => {
@@ -119,9 +126,7 @@ const PartDetails = () => {
                 </div>
                 <span className="text-muted-foreground">(4.8/5 - 124 reviews)</span>
               </div>
-              <p className="text-4xl font-bold text-primary mb-6">
-                ${part.price}
-              </p>
+              <CurrencyDisplay amount={part.price} className="text-4xl font-bold text-primary mb-6" />
             </div>
 
             <div>

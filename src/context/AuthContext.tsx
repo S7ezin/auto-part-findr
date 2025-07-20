@@ -40,15 +40,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       // Mock authentication - replace with real API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // For demo purposes, accept any email/password
-      if (email && password) {
-        const mockUser: User = {
-          id: '1',
-          name: 'John Doe',
-          email: email
-        };
-        setUser(mockUser);
-        localStorage.setItem('user', JSON.stringify(mockUser));
+      // Check if user already exists in localStorage (from registration)
+      const existingUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+      const existingUser = existingUsers.find((u: User) => u.email === email);
+      
+      if (existingUser && email && password) {
+        setUser(existingUser);
+        localStorage.setItem('user', JSON.stringify(existingUser));
         return true;
       }
       return false;
@@ -71,6 +69,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         name,
         email
       };
+      
+      // Store user in registered users list
+      const existingUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+      existingUsers.push(mockUser);
+      localStorage.setItem('registeredUsers', JSON.stringify(existingUsers));
+      
       setUser(mockUser);
       localStorage.setItem('user', JSON.stringify(mockUser));
       return true;

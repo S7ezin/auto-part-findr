@@ -1,19 +1,24 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/context/AuthContext';
-import { Car, Menu, X } from 'lucide-react';
+import { useCart } from '@/context/CartContext';
+import { Car, Menu, X, ShoppingCart } from 'lucide-react';
 import { useState } from 'react';
 
 const Navbar = () => {
   const { user, logout } = useAuth();
+  const { getTotalItems } = useCart();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const cartItemCount = getTotalItems();
 
   const isActive = (path: string) => location.pathname === path;
 
   const navLinks = [
     { path: '/', label: 'Home' },
     { path: '/parts', label: 'Browse Parts' },
+    { path: '/about', label: 'About' },
+    { path: '/contact', label: 'Contact' },
     ...(user ? [{ path: '/profile', label: 'Profile' }] : [])
   ];
 
@@ -42,8 +47,18 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Auth Buttons */}
+          {/* Cart and Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
+            <Link to="/cart" className="relative">
+              <Button variant="ghost" size="sm" className="text-primary-foreground hover:bg-primary-glow">
+                <ShoppingCart className="h-5 w-5" />
+                {cartItemCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-accent text-accent-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {cartItemCount}
+                  </span>
+                )}
+              </Button>
+            </Link>
             {user ? (
               <div className="flex items-center space-x-4">
                 <span className="text-primary-foreground">Welcome, {user.name}</span>
@@ -96,6 +111,16 @@ const Navbar = () => {
                   {link.label}
                 </Link>
               ))}
+              
+              {/* Mobile Cart */}
+              <Link to="/cart" className="flex items-center justify-between text-primary-foreground hover:text-accent transition-colors font-medium" onClick={() => setIsMenuOpen(false)}>
+                <span>Cart</span>
+                {cartItemCount > 0 && (
+                  <span className="bg-accent text-accent-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {cartItemCount}
+                  </span>
+                )}
+              </Link>
               
               {user ? (
                 <div className="space-y-2 pt-4 border-t border-primary-glow">

@@ -3,6 +3,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { SparePart } from '@/data/partsData';
+import { useCart } from '@/context/CartContext';
+import { useToast } from '@/hooks/use-toast';
+import CurrencyDisplay from './CurrencyDisplay';
 import { Eye, ShoppingCart } from 'lucide-react';
 
 interface PartCardProps {
@@ -10,6 +13,16 @@ interface PartCardProps {
 }
 
 const PartCard = ({ part }: PartCardProps) => {
+  const { addToCart } = useCart();
+  const { toast } = useToast();
+
+  const handleAddToCart = () => {
+    addToCart(part);
+    toast({
+      title: "Added to cart",
+      description: `${part.name} has been added to your cart.`,
+    });
+  };
   return (
     <Card className="bg-gradient-card hover:shadow-automotive transition-all duration-300 hover:scale-105 group">
       <CardHeader className="p-0">
@@ -38,7 +51,7 @@ const PartCard = ({ part }: PartCardProps) => {
         </div>
         
         <div className="space-y-2">
-          <p className="text-2xl font-bold text-primary">${part.price}</p>
+          <CurrencyDisplay amount={part.price} className="text-2xl font-bold text-primary" />
           <Badge variant="outline" className="text-xs">
             {part.category}
           </Badge>
@@ -71,10 +84,7 @@ const PartCard = ({ part }: PartCardProps) => {
         <Button 
           className="bg-gradient-accent hover:bg-accent/90" 
           disabled={!part.inStock}
-          onClick={() => {
-            // Add to cart functionality would go here
-            console.log('Added to cart:', part.name);
-          }}
+          onClick={handleAddToCart}
         >
           <ShoppingCart className="h-4 w-4" />
         </Button>

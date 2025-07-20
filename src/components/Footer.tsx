@@ -27,12 +27,15 @@ const Footer = () => {
               <Link to="/parts" className="block text-automotive-silver hover:text-accent transition-colors">
                 Browse Parts
               </Link>
-              <a href="#" className="block text-automotive-silver hover:text-accent transition-colors">
+              <Link to="/about" className="block text-automotive-silver hover:text-accent transition-colors">
                 About Us
-              </a>
-              <a href="#" className="block text-automotive-silver hover:text-accent transition-colors">
+              </Link>
+              <Link to="/contact" className="block text-automotive-silver hover:text-accent transition-colors">
                 Contact
-              </a>
+              </Link>
+              <Link to="/cart" className="block text-automotive-silver hover:text-accent transition-colors">
+                Cart
+              </Link>
             </div>
           </div>
 
@@ -40,18 +43,18 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="font-semibold text-lg">Legal</h3>
             <div className="space-y-2">
-              <a href="#" className="block text-automotive-silver hover:text-accent transition-colors">
+              <Link to="/legal/terms" className="block text-automotive-silver hover:text-accent transition-colors">
                 Terms of Service
-              </a>
-              <a href="#" className="block text-automotive-silver hover:text-accent transition-colors">
+              </Link>
+              <Link to="/legal/privacy" className="block text-automotive-silver hover:text-accent transition-colors">
                 Privacy Policy
-              </a>
-              <a href="#" className="block text-automotive-silver hover:text-accent transition-colors">
+              </Link>
+              <Link to="/legal/returns" className="block text-automotive-silver hover:text-accent transition-colors">
                 Return Policy
-              </a>
-              <a href="#" className="block text-automotive-silver hover:text-accent transition-colors">
+              </Link>
+              <Link to="/legal/warranty" className="block text-automotive-silver hover:text-accent transition-colors">
                 Warranty
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -61,15 +64,15 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-2 text-automotive-silver">
                 <Mail className="h-4 w-4" />
-                <span>info@7xcarhub.com</span>
+                <span>7xcarhubae@gmail.com</span>
               </div>
               <div className="flex items-center space-x-2 text-automotive-silver">
                 <Phone className="h-4 w-4" />
-                <span>+1 (555) 123-4567</span>
+                <span>+971 56 1112343</span>
               </div>
               <div className="flex items-center space-x-2 text-automotive-silver">
                 <MapPin className="h-4 w-4" />
-                <span>123 Auto Parts St, Car City, CA 90210</span>
+                <span>Dubai Design District</span>
               </div>
             </div>
           </div>
